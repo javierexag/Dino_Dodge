@@ -1,0 +1,151 @@
+[gd_scene load_steps=19 format=3 uid="uid://c30lg4kaj52t6"]
+
+[ext_resource type="Script" path="res://Player.gd" id="1_brrgr"]
+[ext_resource type="Texture2D" uid="uid://dvt46xtnm63ka" path="res://Sprites/sprite_sheet_dino.png" id="2_dktyv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jir3h"]
+size = Vector2(21, 35)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hu6pn"]
+size = Vector2(24, 40)
+
+[sub_resource type="Animation" id="Animation_dpk5n"]
+resource_name = "Iddle"
+length = 0.61
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 1]
+}
+
+[sub_resource type="Animation" id="Animation_oms7c"]
+resource_name = "andar"
+length = 0.41
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [4, 5, 4, 3, 4]
+}
+
+[sub_resource type="Animation" id="Animation_p5bb0"]
+resource_name = "andar_2"
+length = 0.41
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [10, 9, 10, 11, 10]
+}
+
+[sub_resource type="Animation" id="Animation_4wdbv"]
+resource_name = "iddle_izq"
+length = 0.61
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [8, 7, 6, 7]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7eo8f"]
+_data = {
+"Iddle": SubResource("Animation_dpk5n"),
+"andar": SubResource("Animation_oms7c"),
+"andar_2": SubResource("Animation_p5bb0"),
+"iddle_izq": SubResource("Animation_4wdbv")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_gyavu"]
+animation = &"Iddle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ilyvf"]
+animation = &"andar"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_yr1vl"]
+animation = &"andar_2"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_fr3s2"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_dnaqc"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ajnxr"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_bhdow"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ynffx"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_q50ay"]
+states/Iddle/node = SubResource("AnimationNodeAnimation_gyavu")
+states/Iddle/position = Vector2(416, 100)
+states/Start/position = Vector2(215, 100)
+states/andar/node = SubResource("AnimationNodeAnimation_ilyvf")
+states/andar/position = Vector2(658, 53)
+states/andar_2/node = SubResource("AnimationNodeAnimation_yr1vl")
+states/andar_2/position = Vector2(663, 161)
+transitions = ["Start", "Iddle", SubResource("AnimationNodeStateMachineTransition_fr3s2"), "Iddle", "andar", SubResource("AnimationNodeStateMachineTransition_dnaqc"), "Iddle", "andar_2", SubResource("AnimationNodeStateMachineTransition_ajnxr"), "andar", "andar_2", SubResource("AnimationNodeStateMachineTransition_bhdow"), "andar_2", "andar", SubResource("AnimationNodeStateMachineTransition_ynffx")]
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_brrgr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(4.5, 2.5)
+shape = SubResource("RectangleShape2D_jir3h")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(5, 1)
+shape = SubResource("RectangleShape2D_hu6pn")
+
+[node name="Body" type="Sprite2D" parent="."]
+texture = ExtResource("2_dktyv")
+hframes = 3
+vframes = 4
+frame = 4
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_7eo8f")
+}
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource("AnimationNodeStateMachine_q50ay")
+anim_player = NodePath("../AnimationPlayer")
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

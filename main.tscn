@@ -1,0 +1,31 @@
+[gd_scene load_steps=2 format=3 uid="uid://vfdxgmrijvgb"]
+
+[ext_resource type="Script" path="res://Main.gd" id="1_0c777"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_0c777")
+
+[node name="Play" type="Button" parent="."]
+offset_left = 46.0
+offset_top = 122.0
+offset_right = 280.0
+offset_bottom = 207.0
+text = "Play"
+
+[node name="Exit" type="Button" parent="."]
+offset_left = 46.0
+offset_top = 215.0
+offset_right = 280.0
+offset_bottom = 300.0
+text = "Exit"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+limit_left = 0
+limit_top = 0
+limit_right = 645
+limit_bottom = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[connection signal="pressed" from="Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="Exit" to="." method="_on_button_2_pressed"]

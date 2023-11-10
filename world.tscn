@@ -1,0 +1,148 @@
+[gd_scene load_steps=18 format=3 uid="uid://csaqcgd5lkacv"]
+
+[ext_resource type="Script" path="res://world.gd" id="1_ytdja"]
+[ext_resource type="Texture2D" uid="uid://cexhmifg7eb2k" path="res://Fondo_definitivo.png" id="2_1bkb4"]
+[ext_resource type="Texture2D" uid="uid://q45bfmnuaq1u" path="res://Cielo.png" id="2_1vtx8"]
+[ext_resource type="PackedScene" uid="uid://c30lg4kaj52t6" path="res://player.tscn" id="2_jkyjk"]
+[ext_resource type="PackedScene" uid="uid://b24ch0ehotfsu" path="res://spawner.tscn" id="4_1ujft"]
+[ext_resource type="Texture2D" uid="uid://dotrgu1xqfl1x" path="res://Sprites/suelo_definitivo.png" id="4_ceiic"]
+[ext_resource type="Texture2D" uid="uid://bkxs4ovj5bu1u" path="res://Sprites/Fire.png" id="4_o1cok"]
+[ext_resource type="Texture2D" uid="uid://cohpkbjb0rcau" path="res://Sprites/met_fuego.png" id="7_eog8j"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mx6nu"]
+size = Vector2(367, 24.75)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_lximd"]
+particles_animation = true
+particles_anim_h_frames = 3
+particles_anim_v_frames = 2
+particles_anim_loop = true
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_d2gvp"]
+lifetime_randomness = 1.0
+emission_shape = 1
+emission_sphere_radius = 36.39
+particle_flag_disable_z = true
+direction = Vector3(45, -100, 0)
+spread = 41.68
+gravity = Vector3(0, -50, 0)
+initial_velocity_max = 50.0
+angular_velocity_max = 10.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+linear_accel_max = 40.0
+damping_max = 15.717
+scale_min = 0.0
+scale_max = 3.0
+color = Color(0.239216, 0.101961, 0.12549, 0.188235)
+anim_speed_max = 2.0
+collision_mode = 1
+collision_friction = 0.58
+collision_bounce = 0.71
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2d087"]
+size = Vector2(22, 345)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_raf3e"]
+size = Vector2(15, 331.75)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_700lf"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_vghtk"]
+emission_shape = 1
+emission_sphere_radius = 0.01
+particle_flag_disable_z = true
+direction = Vector3(0, -90, 0)
+spread = 34.11
+gravity = Vector3(0, -100, 0)
+initial_velocity_min = 115.79
+initial_velocity_max = 115.79
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_oj0ws"]
+particles_animation = true
+particles_anim_h_frames = 3
+particles_anim_v_frames = 2
+particles_anim_loop = true
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_uwlti"]
+emission_shape = 1
+emission_sphere_radius = 9.44
+particle_flag_disable_z = true
+direction = Vector3(50, -50, 0)
+spread = 147.32
+gravity = Vector3(0, -10, 0)
+initial_velocity_max = 10.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+
+[node name="World" type="Node2D"]
+script = ExtResource("1_ytdja")
+
+[node name="Suelo" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Suelo"]
+position = Vector2(0, 627.625)
+shape = SubResource("RectangleShape2D_mx6nu")
+
+[node name="Sprite2D3" type="Sprite2D" parent="Suelo"]
+position = Vector2(0, 379)
+texture = ExtResource("2_1vtx8")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Suelo"]
+position = Vector2(0, 443)
+texture = ExtResource("2_1bkb4")
+
+[node name="GPUParticles2D2" type="GPUParticles2D" parent="Suelo"]
+material = SubResource("CanvasItemMaterial_lximd")
+position = Vector2(112.075, 379.83)
+scale = Vector2(0.5, 0.5)
+amount = 200
+process_material = SubResource("ParticleProcessMaterial_d2gvp")
+texture = ExtResource("4_o1cok")
+
+[node name="Sprite2D" type="Sprite2D" parent="Suelo"]
+position = Vector2(0, 609)
+texture = ExtResource("4_ceiic")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Suelo"]
+position = Vector2(-173, 455.5)
+shape = SubResource("RectangleShape2D_2d087")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Suelo"]
+position = Vector2(172, 448)
+shape = SubResource("RectangleShape2D_raf3e")
+
+[node name="Player" parent="." instance=ExtResource("2_jkyjk")]
+position = Vector2(0, 593)
+
+[node name="Spawner" parent="." instance=ExtResource("4_1ujft")]
+position = Vector2(-155.195, 214.965)
+
+[node name="Label" type="Label" parent="."]
+offset_left = 91.0
+offset_top = 288.0
+offset_right = 148.0
+offset_bottom = 311.0
+horizontal_alignment = 3
+
+[node name="Camera2D" type="Camera2D" parent="."]
+limit_left = -75
+limit_top = 283
+limit_right = 160
+limit_bottom = 400
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+material = SubResource("CanvasItemMaterial_700lf")
+position = Vector2(112.09, 383.085)
+amount = 1
+process_material = SubResource("ParticleProcessMaterial_vghtk")
+texture = ExtResource("7_eog8j")
+
+[node name="GPUParticles2D2" type="GPUParticles2D" parent="."]
+material = SubResource("CanvasItemMaterial_oj0ws")
+position = Vector2(109.305, 383.6)
+amount = 60
+process_material = SubResource("ParticleProcessMaterial_uwlti")
+texture = ExtResource("4_o1cok")
